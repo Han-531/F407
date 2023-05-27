@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "usart.h": "c",
+        "main.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "mcu_log.h": "c"
+    }
+}
