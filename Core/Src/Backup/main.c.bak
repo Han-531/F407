@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -104,6 +105,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
@@ -113,9 +115,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    u1_printf("SYS_LOG_X OK \r\n");
+		HAL_Delay(500);
     /* USER CODE END WHILE */
-    HAL_Delay(500);
-    u1_printf("u1_printf is OK num = %d\r\n",2);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
