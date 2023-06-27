@@ -3,6 +3,7 @@
         "usart.h": "c",
         "main.h": "c",
         "stm32f4xx_hal.h": "c",
-        "mcu_log.h": "c"
+        "mcu_log.h": "c",
+        "cmsis_os.h": "c"
     }
 }
