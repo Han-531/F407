@@ -5,5 +5,7 @@
         "stm32f4xx_hal.h": "c",
         "mcu_log.h": "c",
         "cmsis_os.h": "c"
-    }
+    },
+    "commentTranslate.source": "Bing",
+    "commentTranslate.targetLanguage": "zh-CN"
 }
