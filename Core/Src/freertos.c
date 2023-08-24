@@ -118,12 +118,16 @@ void MX_FREERTOS_Init(void) {
   * @retval None
   */
 /* USER CODE END Header_StartDefaultTask */
+uint32_t temp_var = 0;
 void StartDefaultTask(void const * argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
   for(;;)
   {
+		temp_var++;
+		if(temp_var > 0xFFFF)
+			temp_var = 0;
 		u1_printf("u1_printf in DefaultTask OK \r\n");
     osDelay(500);
   }
