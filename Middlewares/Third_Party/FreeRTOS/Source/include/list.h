@@ -137,19 +137,24 @@ use of FreeRTOS.*/
  * Definition of the only type of object that a list can contain.
  */
 struct xLIST;
-struct xLIST_ITEM
+struct xLIST_ITEM	//链表节点结构体
 {
 	listFIRST_LIST_ITEM_INTEGRITY_CHECK_VALUE			/*< Set to a known value if configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
 	configLIST_VOLATILE TickType_t xItemValue;			/*< The value being listed.  In most cases this is used to sort the list in descending order. */
+														//xItemValue： 辅助值，用于帮助结点做顺序排列
+
 	struct xLIST_ITEM * configLIST_VOLATILE pxNext;		/*< Pointer to the next ListItem_t in the list. */
 	struct xLIST_ITEM * configLIST_VOLATILE pxPrevious;	/*< Pointer to the previous ListItem_t in the list. */
 	void * pvOwner;										/*< Pointer to the object (normally a TCB) that contains the list item.  There is therefore a two way link between the object containing the list item and the list item itself. */
+														//pvOwner：指向拥有该结点的内核对象(其实就是指向我们前面讲的包含该结点的容器)，通常是 TCB(任务结构体)
+
 	struct xLIST * configLIST_VOLATILE pxContainer;		/*< Pointer to the list in which this list item is placed (if any). */
+														//pxContainer：指向该结点所在的链表，这个指针指向前面的链表结构体便于访问链表结构体的其他成员(链表结点个数，索引指针…)。
 	listSECOND_LIST_ITEM_INTEGRITY_CHECK_VALUE			/*< Set to a known value if configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
 };
 typedef struct xLIST_ITEM ListItem_t;					/* For some reason lint wants this as two separate definitions. */
 
-struct xMINI_LIST_ITEM
+struct xMINI_LIST_ITEM	//精简结点类型就是头结点的类型
 {
 	listFIRST_LIST_ITEM_INTEGRITY_CHECK_VALUE			/*< Set to a known value if configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
 	configLIST_VOLATILE TickType_t xItemValue;
@@ -161,12 +166,14 @@ typedef struct xMINI_LIST_ITEM MiniListItem_t;
 /*
  * Definition of the type of queue used by the scheduler.
  */
-typedef struct xLIST
+typedef struct xLIST //链表结构体
 {
 	listFIRST_LIST_INTEGRITY_CHECK_VALUE				/*< Set to a known value if configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
-	volatile UBaseType_t uxNumberOfItems;
+	volatile UBaseType_t uxNumberOfItems;		//uxNumberOfItems：链表节点计数器，用于表示该链表下有多少个节点，头结点除外。
 	ListItem_t * configLIST_VOLATILE pxIndex;			/*< Used to walk through the list.  Points to the last item returned by a call to listGET_OWNER_OF_NEXT_ENTRY (). */
+												//pxIndex：链表结点索引指针，用于遍历结点，该指针指向的链表项表示该链表项正在使用，可以通过listGET_OWNER_OF_NEXT_ENTRY ()这个宏来调整它的位置。
 	MiniListItem_t xListEnd;							/*< List item that contains the maximum possible item value meaning it is always at the end of the list and is therefore used as a marker. */
+												//xListEnd：链表的头结点，只起到站岗的作用，在双向循环链表中既可以说的头也可以说是尾结点，而且数据类型是一个精简的结点
 	listSECOND_LIST_INTEGRITY_CHECK_VALUE				/*< Set to a known value if configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES is set to 1. */
 } List_t;
 
